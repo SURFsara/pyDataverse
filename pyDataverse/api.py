@@ -761,13 +761,37 @@ class DataAccessApi(Api):
         return self.put_request(url, auth=auth)
 
     def list_file_access_requests(self, identifier, auth=DEPRECATION_GUARD):
-        """Liste datafile access requests.
+        """List datafile access requests.
 
         https://guides.dataverse.org/en/4.18.1/api/dataaccess.html#list-file-access-requests
 
         curl -H "X-Dataverse-key:$API_TOKEN" -X GET http://$SERVER/api/access/datafile/{id}/listRequests
         """
         url = "{0}/datafile/{1}/listRequests".format(
+            self.base_url_api_data_access, identifier
+        )
+        return self.get_request(url, auth=auth)
+
+    def user_has_file_access_requested(self, identifier, auth=False):
+        """User has requested access to a file.
+
+        https://guides.dataverse.org/en/latest/api/dataaccess.html#user-has-requested-access-to-a-file
+
+        curl -H "X-Dataverse-key:$API_TOKEN" -X GET http://$SERVER/api/access/datafile/{id}/userFileAccessRequested
+        """
+        url = "{0}/datafile/{1}/userFileAccessRequested".format(
+            self.base_url_api_data_access, identifier
+        )
+        return self.get_request(url, auth=auth)
+
+    def list_file_user_permissions(self, identifier, auth=False):
+        """List user permissions for a file.
+
+        https://guides.dataverse.org/en/latest/api/dataaccess.html#get-user-permissions-on-a-file
+
+        curl -H "X-Dataverse-key:$API_TOKEN" -X GET http://$SERVER/api/access/datafile/{id}/userPermissions
+        """
+        url = "{0}/datafile/{1}/userPermissions".format(
             self.base_url_api_data_access, identifier
         )
         return self.get_request(url, auth=auth)
